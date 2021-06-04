@@ -11,7 +11,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <p>
             อิหยังวะหนิ ฮัลโหลลลวัดตตาฟัค Edit <code>src/App.tsx</code> and save
-            to jing a paw.
+            to jing a paw. so i need to test again.
           </p>
           <a
             className="App-link"
@@ -19,7 +19,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+            oh my gosh
           </a>
         </header>
       </div>

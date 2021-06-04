@@ -1,28 +1,30 @@
 # Current node lts version
-FROM node:14.17.0-alpine 
+FROM node:14.17.0-alpine as build
 
-# ARG INPUT_APP_ENV
-
-ENV APP_ENV $INPUT_APP_ENV
-# ENV APP_ENV Development
-
-WORKDIR /app/frontend
-# RUN npm install
+WORKDIR /app/frontend/
 
 COPY . /app/frontend/
-# COPY . /app/frontend
+
 RUN npm install
 
-# CMD if [ ${APP_ENV} = production ]; \
-#         then \
-#         npm install -g http-server && \
-#         npm run build && \
-#         cd build && \
-#         hs -p 8081; \
-#         else \
-#         npm run start; \
-#         fi
+# Multistage Dockerfile
 
-# EXPOSE 8081
+FROM build as dev
 
-# CMD npm start
+ENV CHOKIDAR_USEPOLLING=true
+
+EXPOSE 3000
+
+CMD ["npm", "run" ,"start"]
+
+FROM nginx:stable-alpine as run
+
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY --from=build /app/frontend/build /usr/share/nginx/html
+
+COPY nginx/nginx.conf /etc/nginx/conf.d
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
