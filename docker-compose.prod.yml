@@ -1,0 +1,12 @@
+version: "3"
+services:
+    frontend:
+        image: frontend:prod
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile.prod
+            args:
+                - REACT_APP_NAME=kuyraiyedmae-prod
+                - REACT_APP_FUCK=FUCK-prod
+        ports:
+            - "80:80"

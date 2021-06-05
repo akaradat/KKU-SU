@@ -1,0 +1,10 @@
+# Current node lts version
+FROM node:14.17.0-alpine
+
+WORKDIR /app/frontend/
+
+COPY . /app/frontend/
+
+RUN npm install
+
+CMD ["npm", "run" ,"start"]
