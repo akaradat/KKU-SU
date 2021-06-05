@@ -2,7 +2,7 @@ import { Component } from 'react';
 import logo from './logo.svg';
 //import './App.css';
 import './App.scss';
-
+console.log(process.env);
 class App extends Component {
   render(): JSX.Element {
     return (
@@ -19,8 +19,10 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            oh my gosh
+            Oh My Gosh
           </a>
+          <h2>{`${process.env.REACT_APP_NAME} testing`}</h2>
+          <h2>{`${process.env.REACT_APP_FUCK} testing`}</h2>
         </header>
       </div>
     );
