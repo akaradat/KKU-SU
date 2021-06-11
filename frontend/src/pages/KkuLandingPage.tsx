@@ -5,9 +5,9 @@ import ThreeColSlider from 'components/cards/ThreeColSlider';
 import SimpleWithSideImageFAQS from 'components/faqs/SimpleWithSideImage';
 import ProfileThreeColGridCards from 'components/cards/ProfileThreeColGrid';
 import TwoColContactUsFullForm from 'components/forms/TwoColContactUsWithIllustrationFullForm';
-import { FunctionComponent } from 'react';
+import { ReactElement } from 'react';
 
-const KkuLandingPage: FunctionComponent = () => (
+export default (): ReactElement => (
   <>
     <AnimationRevealPage disabled>
       <Hero roundedHeaderButton={true} />
@@ -19,5 +19,3 @@ const KkuLandingPage: FunctionComponent = () => (
     </AnimationRevealPage>
   </>
 );
-
-export default KkuLandingPage;

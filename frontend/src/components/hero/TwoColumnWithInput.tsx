@@ -1,15 +1,13 @@
-/* eslint-disable */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 //eslint-disable-next-line
 import { css } from 'styled-components/macro';
 
-import Header from '../headers/light.js';
+import Header from 'components/headers/light';
 
 import { ReactComponent as SvgDecoratorBlob1 } from '../../images/svg-decorator-blob-1.svg';
 import DesignIllustration from '../../images/design-illustration-2.svg';
-import CustomersLogoStripImage from '../../images/customers-logo-strip.png';
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col lg:flex-row lg:items-center max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -46,49 +44,51 @@ const CustomersLogoStrip = styled.div`
   }
 `;
 
-export default ({ roundedHeaderButton }) => {
-  return (
-    <>
-      <Header roundedHeaderButton={roundedHeaderButton} />
-      <Container id="checkGroup">
-        <TwoColumn>
-          <LeftColumn>
-            <Heading>
-              KKU <span tw="text-primary-500">FWS</span>
-            </Heading>
-            <Paragraph>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </Paragraph>
-            <Actions>
-              <input type="text" placeholder="รหัสนักศึกษา เช่น 643020112-x" />
-              <button
-                onClick={() => {
-                  console.log(process.env);
-                }}
-              >
-                ตรวจสอบกลุ่ม
-              </button>
-            </Actions>
-            {/* <CustomersLogoStrip>
-              <p>Our TRUSTED Customers</p>
-              <img src={CustomersLogoStripImage} alt="Our Customers" />
-            </CustomersLogoStrip> */}
-          </LeftColumn>
-          <RightColumn>
-            <IllustrationContainer>
-              <img
-                tw="min-w-0 w-full max-w-lg xl:max-w-3xl"
-                src={DesignIllustration}
-                alt="Design Illustration"
-              />
-            </IllustrationContainer>
-          </RightColumn>
-        </TwoColumn>
-        <DecoratorBlob1 />
-      </Container>
-    </>
-  );
+type props = {
+  roundedHeaderButton: boolean;
 };
+
+export default ({ roundedHeaderButton }: props): ReactElement => (
+  <>
+    <Header roundedHeaderButton={roundedHeaderButton} />
+    <Container id="checkGroup">
+      <TwoColumn>
+        <LeftColumn>
+          <Heading>
+            KKU <span tw="text-primary-500">FWS</span>
+          </Heading>
+          <Paragraph>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industrys standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book.
+          </Paragraph>
+          <Actions>
+            <input type="text" placeholder="รหัสนักศึกษา เช่น 643020112-x" />
+            <button
+              onClick={() => {
+                console.log(process.env);
+              }}
+            >
+              ตรวจสอบกลุ่ม
+            </button>
+          </Actions>
+          {/* <CustomersLogoStrip>
+            <p>Our TRUSTED Customers</p>
+            <img src={CustomersLogoStripImage} alt="Our Customers" />
+          </CustomersLogoStrip> */}
+        </LeftColumn>
+        <RightColumn>
+          <IllustrationContainer>
+            <img
+              tw="min-w-0 w-full max-w-lg xl:max-w-3xl"
+              src={DesignIllustration}
+              alt="Design Illustration"
+            />
+          </IllustrationContainer>
+        </RightColumn>
+      </TwoColumn>
+      <DecoratorBlob1 />
+    </Container>
+  </>
+);

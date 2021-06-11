@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { motion } from 'framer-motion';
 import tw from 'twin.macro';
 import styled from 'styled-components';
@@ -57,47 +56,41 @@ export const DesktopNavLinks = tw.nav`
   hidden lg:flex flex-1 justify-between items-center
 `;
 
+type props = {
+  roundedHeaderButton?: boolean;
+  logoLink?: ReactElement | undefined;
+  links?: ReactElement;
+  className?: string;
+  collapseBreakpointClass?: string;
+};
+
 export default ({
   roundedHeaderButton = false,
   logoLink,
   links,
   className,
   collapseBreakpointClass = 'lg',
-}) => {
-  /*
-   * This header component accepts an optionals "links" prop that specifies the links to render in the navbar.
-   * This links props should be an array of "NavLinks" components which is exported from this file.
-   * Each "NavLinks" component can contain any amount of "NavLink" component, also exported from this file.
-   * This allows this Header to be multi column.
-   * So If you pass only a single item in the array with only one NavLinks component as root, you will get 2 column header.
-   * Left part will be LogoLink, and the right part will be the the NavLinks component you
-   * supplied.
-   * Similarly if you pass 2 items in the links array, then you will get 3 columns, the left will be "LogoLink", the center will be the first "NavLinks" component in the array and the right will be the second "NavLinks" component in the links array.
-   * You can also choose to directly modify the links here by not passing any links from the parent component and
-   * changing the defaultLinks variable below below.
-   * If you manipulate links here, all the styling on the links is already done for you. If you pass links yourself though, you are responsible for styling the links or use the helper styled components that are defined here (NavLink)
-   */
-  const defaultLinks = [
+}: props): ReactElement => {
+  const primaryLinkProps = {
+    css: roundedHeaderButton && tw`rounded-full`,
+    href: '#register',
+  };
+  const defaultLinks: ReactElement = (
     <NavLinks key={1}>
       <NavLink href="#event">กิจกรรม</NavLink>
       <NavLink href="#checkEvent">ตรวจสอบกิจกรรม</NavLink>
       <NavLink href="#checkGroup" tw="lg:ml-12!">
         เช็คกลุ่ม
       </NavLink>
-      <PrimaryLink
-        css={roundedHeaderButton && tw`rounded-full`}
-        href="#register"
-      >
-        ลงทะเบียน
-      </PrimaryLink>
-    </NavLinks>,
-  ];
+      <PrimaryLink {...primaryLinkProps}>ลงทะเบียน</PrimaryLink>
+    </NavLinks>
+  );
 
   const { showNavLinks, animation, toggleNavbar } = useAnimatedNavToggler();
   const collapseBreakpointCss =
     collapseBreakPointCssMap[collapseBreakpointClass];
 
-  const defaultLogoLink = (
+  const defaultLogoLink: ReactElement = (
     <LogoLink href="/">
       <img src={logo} alt="logo" />
       {process.env.REACT_APP_APP_NAME}
@@ -106,6 +99,19 @@ export default ({
 
   logoLink = logoLink || defaultLogoLink;
   links = links || defaultLinks;
+  const DesktopNavLinksCss = {
+    css: collapseBreakpointCss.desktopNavLinks,
+  };
+
+  const MobileNavLinksContainerCss = {
+    css: collapseBreakpointCss.mobileNavLinksContainer,
+  };
+
+  const MobileNavLinksCss = {
+    initial: { x: '150%', display: 'none' },
+    animate: animation,
+    css: collapseBreakpointCss.mobileNavLinks,
+  };
 
   return (
     <Header className={className || 'header-light'} id="home">
@@ -118,13 +124,7 @@ export default ({
         css={collapseBreakpointCss.mobileNavLinksContainer}
       >
         {logoLink}
-        <MobileNavLinks
-          initial={{ x: '150%', display: 'none' }}
-          animate={animation}
-          css={collapseBreakpointCss.mobileNavLinks}
-        >
-          {links}
-        </MobileNavLinks>
+        <MobileNavLinks {...MobileNavLinksCss}>{links}</MobileNavLinks>
         <NavToggle
           onClick={toggleNavbar}
           className={showNavLinks ? 'open' : 'closed'}
@@ -139,12 +139,6 @@ export default ({
     </Header>
   );
 };
-
-/* The below code is for generating dynamic break points for navbar.
- * Using this you can specify if you want to switch
- * to the toggleable mobile navbar at "sm", "md" or "lg" or "xl" above using the collapseBreakpointClass prop
- * Its written like this because we are using macros and we can not insert dynamic variables in macros
- */
 
 const collapseBreakPointCssMap = {
   sm: {
