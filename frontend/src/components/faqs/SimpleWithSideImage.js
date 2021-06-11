@@ -7,9 +7,9 @@ import { css } from 'styled-components/macro'; //eslint-disable-line
 import {
   SectionHeading,
   Subheading as SubheadingBase,
-} from 'components/misc/Headings.js';
+} from 'components/misc/Headings';
 import { ReactComponent as ExternalLink } from 'feather-icons/dist/icons/external-link.svg';
-import { Container, ContentWithPaddingXl } from 'components/misc/Layouts.js';
+import { Container, ContentWithPaddingXl } from 'components/misc/Layouts';
 
 import DesignIllustration from '../../images/team-illustration-3.svg';
 

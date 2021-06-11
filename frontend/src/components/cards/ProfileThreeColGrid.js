@@ -1,26 +1,32 @@
 /* eslint-disable */
-import React from "react";
-import tw from "twin.macro";
-import styled from "styled-components";
-import { css } from "styled-components/macro";
-import { Container, ContentWithPaddingXl } from "components/misc/Layouts.js";
-import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings";
-import { SectionDescription } from "components/misc/Typography";
-import { ReactComponent as FacebookIcon } from "images/facebook-icon.svg";
-import { ReactComponent as TwitterIcon } from "images/twitter-icon.svg";
-import { ReactComponent as IgIcon } from "images/star-icon.svg";
+import React from 'react';
+import tw from 'twin.macro';
+import styled from 'styled-components';
+import { css } from 'styled-components/macro';
+import { Container, ContentWithPaddingXl } from 'components/misc/Layouts';
+import {
+  SectionHeading,
+  Subheading as SubheadingBase,
+} from 'components/misc/Headings';
+import { SectionDescription } from 'components/misc/Typography';
+import { ReactComponent as FacebookIcon } from 'images/facebook-icon.svg';
+import { ReactComponent as TwitterIcon } from 'images/twitter-icon.svg';
+import { ReactComponent as IgIcon } from 'images/star-icon.svg';
 
-const HeadingContainer = tw.div``
-const Heading = tw(SectionHeading)``
-const Subheading = tw(SubheadingBase)`text-center mb-3`
-const Description = tw(SectionDescription)`mx-auto text-center`
+const HeadingContainer = tw.div``;
+const Heading = tw(SectionHeading)``;
+const Subheading = tw(SubheadingBase)`text-center mb-3`;
+const Description = tw(SectionDescription)`mx-auto text-center`;
 
-const Cards = tw.div`flex flex-wrap flex-row justify-center sm:max-w-2xl lg:max-w-5xl mx-auto`
-const Card = tw.div`mt-24 w-full sm:w-1/2 lg:w-1/3 flex flex-col items-center`
+const Cards = tw.div`flex flex-wrap flex-row justify-center sm:max-w-2xl lg:max-w-5xl mx-auto`;
+const Card = tw.div`mt-24 w-full sm:w-1/2 lg:w-1/3 flex flex-col items-center`;
 const CardImage = styled.div`
-  ${props => css`background-image: url("${props.imageSrc}");`}
+  ${(props) =>
+    css`
+      background-image: url('${props.imageSrc}');
+    `}
   ${tw`w-64 h-64 bg-contain bg-center rounded`}
-`
+`;
 const CardContent = styled.div`
   ${tw`flex flex-col items-center mt-6`}
   .position {
@@ -29,7 +35,7 @@ const CardContent = styled.div`
   .name {
     ${tw`mt-1 text-xl font-medium text-gray-900`}
   9
-`
+`;
 
 const CardLinks = styled.div`
   ${tw`mt-6 flex`}
@@ -39,71 +45,71 @@ const CardLinks = styled.div`
       ${tw`fill-current w-6 h-6`}
     }
   }
-`
+`;
 
 export default ({
-  heading = "ผู้สนับสนุน",
-  subheading = "",
-  description = "",
+  heading = 'ผู้สนับสนุน',
+  subheading = '',
+  description = '',
   cards = [
     {
-      imageSrc: "https://picsum.photos/seed/xyz/1000",
-      position: "www.xyz.com",
-      name: "Adam เครื่องเขียน",
+      imageSrc: 'https://picsum.photos/seed/xyz/1000',
+      position: 'www.xyz.com',
+      name: 'Adam เครื่องเขียน',
       links: [
         {
-          url: "https://twitter.com",
+          url: 'https://twitter.com',
           icon: TwitterIcon,
         },
         {
-          url: "https://linkedin.com",
+          url: 'https://linkedin.com',
           icon: FacebookIcon,
         },
         {
-          url: "https://github.com",
+          url: 'https://github.com',
           icon: IgIcon,
         },
       ],
     },
     {
-      imageSrc: "https://picsum.photos/seed/abc/1000",
-      position: "www.abc.com",
-      name: "Charlotte เครื่องครัว",
+      imageSrc: 'https://picsum.photos/seed/abc/1000',
+      position: 'www.abc.com',
+      name: 'Charlotte เครื่องครัว',
       links: [
         {
-          url: "https://twitter.com",
+          url: 'https://twitter.com',
           icon: TwitterIcon,
         },
         {
-          url: "https://linkedin.com",
+          url: 'https://linkedin.com',
           icon: FacebookIcon,
         },
         {
-          url: "https://github.com",
+          url: 'https://github.com',
           icon: IgIcon,
         },
       ],
     },
     {
-      imageSrc: "https://picsum.photos/seed/hello/1000",
-      position: "08x-xxx-xxxx",
-      name: "Silvester อาหารตามสั่ง",
+      imageSrc: 'https://picsum.photos/seed/hello/1000',
+      position: '08x-xxx-xxxx',
+      name: 'Silvester อาหารตามสั่ง',
       links: [
         {
-          url: "https://twitter.com",
+          url: 'https://twitter.com',
           icon: TwitterIcon,
         },
         {
-          url: "https://linkedin.com",
+          url: 'https://linkedin.com',
           icon: FacebookIcon,
         },
         {
-          url: "https://github.com",
+          url: 'https://github.com',
           icon: IgIcon,
         },
       ],
-    }
-  ]
+    },
+  ],
 }) => {
   return (
     <Container>

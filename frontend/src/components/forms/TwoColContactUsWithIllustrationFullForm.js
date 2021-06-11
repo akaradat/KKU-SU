@@ -6,8 +6,8 @@ import { css } from 'styled-components/macro'; //eslint-disable-line
 import {
   SectionHeading,
   Subheading as SubheadingBase,
-} from 'components/misc/Headings.js';
-import { PrimaryButton as PrimaryButtonBase } from 'components/misc/Buttons.js';
+} from 'components/misc/Headings';
+import { PrimaryButton as PrimaryButtonBase } from 'components/misc/Buttons';
 import EmailIllustrationSrc from 'images/email-illustration.svg';
 
 const Container = tw.div`relative`;
