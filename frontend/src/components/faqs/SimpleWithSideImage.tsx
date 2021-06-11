@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { motion } from 'framer-motion';
 import tw from 'twin.macro';
 import styled from 'styled-components';
@@ -9,7 +8,7 @@ import {
   Subheading as SubheadingBase,
 } from 'components/misc/Headings';
 import { ReactComponent as ExternalLink } from 'feather-icons/dist/icons/external-link.svg';
-import { Container, ContentWithPaddingXl } from 'components/misc/Layouts';
+import { Container } from 'components/misc/Layouts';
 
 import DesignIllustration from '../../images/team-illustration-3.svg';
 
@@ -48,15 +47,24 @@ const Answer = motion(
   tw.dd`pointer-events-none text-sm sm:text-base leading-relaxed`
 );
 
+type Props = {
+  subheading?: string;
+  heading?: string;
+  description?: string;
+  faqs?:
+    | {
+        question: string;
+        answer: string;
+      }[]
+    | null;
+};
+
 export default ({
   subheading = '',
   heading = 'Questions',
   description = 'Here are some frequently asked questions about our hotels from our loving customers. Should you have any other questions, feel free to reach out via the contact form below.',
-  imageSrc = 'https://images.unsplash.com/photo-1579427421635-a0015b804b2e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1024&q=80',
-  imageContain = false,
-  imageShadow = true,
   faqs = null,
-}) => {
+}: Props): ReactElement => {
   /*
    * You can modify FAQs either by modifying the below defaultFaqs array or by passing a custom array of FAQs using
    * the faqs prop
