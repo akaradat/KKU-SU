@@ -21,13 +21,6 @@ const IllustrationContainer = tw.div`flex justify-center lg:justify-end items-ce
 const TwoColumn = tw.div`flex`;
 const Column = tw.div``;
 
-const Image = styled.div((props) => [
-  `background-image: url("${props.imageSrc}");`,
-  props.imageContain ? tw`bg-contain bg-no-repeat` : tw`bg-cover`,
-  props.imageShadow ? tw`shadow` : tw`shadow-none`,
-  tw`hidden lg:block rounded h-144 bg-center`,
-]);
-
 const FAQContent = tw.div`lg:ml-12`;
 const Subheading = tw(SubheadingBase)`mb-4 text-center lg:text-left`;
 const Heading = tw(SectionHeading)`lg:text-left`;

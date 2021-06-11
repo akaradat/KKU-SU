@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { css } from 'styled-components/macro'; //eslint-disable-line
@@ -35,11 +34,17 @@ const Description = tw.p`mt-4 text-center md:text-left text-sm md:text-base lg:t
 
 const Form = tw.form`mt-8 md:mt-10 text-sm flex flex-col max-w-sm mx-auto md:mx-0`;
 const Input = tw.input`mt-6 first:mt-0 border-b-2 py-3 focus:outline-none font-medium transition duration-300 hocus:border-primary-500`;
-const Textarea = styled(Input).attrs({ as: 'textarea' })`
-  ${tw`h-24`}
-`;
 
 const SubmitButton = tw(PrimaryButtonBase)`inline-block mt-8`;
+type Props = {
+  subheading?: string;
+  heading?: string | ReactElement;
+  description?: string;
+  submitButtonText?: string;
+  formAction?: string;
+  formMethod?: string;
+  textOnLeft?: boolean;
+};
 
 export default ({
   subheading = 'WELCOME',
@@ -54,7 +59,7 @@ export default ({
   formAction = '#',
   formMethod = 'get',
   textOnLeft = true,
-}) => {
+}: Props): ReactElement => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
 
   return (
