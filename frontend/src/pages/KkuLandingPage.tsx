@@ -3,7 +3,7 @@ import Hero from 'components/hero/TwoColumnWithInput';
 import Footer from 'components/footers/MiniCenteredFooter';
 import Event from 'components/cards/ThreeColSlider';
 import CheckEvent from 'components/faqs/SimpleWithSideImage';
-import ProfileThreeColGridCards from 'components/cards/ProfileThreeColGrid';
+import Sponsor from 'components/cards/ProfileThreeColGrid';
 import Register from 'components/forms/TwoColContactUsWithIllustrationFullForm';
 import { ReactElement } from 'react';
 
@@ -14,7 +14,7 @@ export default (): ReactElement => (
       <Event />
       <CheckEvent heading="ตรวจสอบกิจกรรม" description="" />
       <Register />
-      <ProfileThreeColGridCards />
+      <Sponsor />
       <Footer />
     </AnimationRevealPage>
   </>

@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React from 'react';
+import React, { FunctionComponent, ReactElement } from 'react';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { css } from 'styled-components/macro';
@@ -46,6 +45,21 @@ const CardLinks = styled.div`
     }
   }
 `;
+
+type Props = {
+  heading?: string;
+  subheading?: string;
+  description?: string;
+  cards?: {
+    imageSrc: string;
+    position: string;
+    name: string;
+    links: {
+      url: string;
+      icon: FunctionComponent<css>;
+    }[];
+  }[];
+};
 
 export default ({
   heading = 'ผู้สนับสนุน',
@@ -110,34 +124,32 @@ export default ({
       ],
     },
   ],
-}) => {
-  return (
-    <Container>
-      <ContentWithPaddingXl>
-        <HeadingContainer>
-          {subheading && <Subheading>{subheading}</Subheading>}
-          {heading && <Heading>{heading}</Heading>}
-          {description && <Description>{description}</Description>}
-        </HeadingContainer>
-        <Cards>
-          {cards.map((card, index) => (
-            <Card key={index}>
-              <CardImage imageSrc={card.imageSrc} />
-              <CardContent>
-                <span className="position">{card.position}</span>
-                <span className="name">{card.name}</span>
-                <CardLinks>
-                  {card.links.map((link, linkIndex) => (
-                    <a key={linkIndex} className="link" href={link.url}>
-                      <link.icon className="icon" />
-                    </a>
-                  ))}
-                </CardLinks>
-              </CardContent>
-            </Card>
-          ))}
-        </Cards>
-      </ContentWithPaddingXl>
-    </Container>
-  );
-};
+}: Props): ReactElement => (
+  <Container>
+    <ContentWithPaddingXl>
+      <HeadingContainer>
+        {subheading && <Subheading>{subheading}</Subheading>}
+        {heading && <Heading>{heading}</Heading>}
+        {description && <Description>{description}</Description>}
+      </HeadingContainer>
+      <Cards>
+        {cards.map((card, index) => (
+          <Card key={index}>
+            <CardImage imageSrc={card.imageSrc} />
+            <CardContent>
+              <span className="position">{card.position}</span>
+              <span className="name">{card.name}</span>
+              <CardLinks>
+                {card.links.map((link, linkIndex) => (
+                  <a key={linkIndex} className="link" href={link.url}>
+                    <link.icon className="icon" />
+                  </a>
+                ))}
+              </CardLinks>
+            </CardContent>
+          </Card>
+        ))}
+      </Cards>
+    </ContentWithPaddingXl>
+  </Container>
+);
