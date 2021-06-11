@@ -99,13 +99,6 @@ export default ({
 
   logoLink = logoLink || defaultLogoLink;
   links = links || defaultLinks;
-  const DesktopNavLinksCss = {
-    css: collapseBreakpointCss.desktopNavLinks,
-  };
-
-  const MobileNavLinksContainerCss = {
-    css: collapseBreakpointCss.mobileNavLinksContainer,
-  };
 
   const MobileNavLinksCss = {
     initial: { x: '150%', display: 'none' },
