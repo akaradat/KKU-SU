@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { Container as ContainerBase } from 'components/misc/Layouts';
@@ -29,7 +28,7 @@ const SocialLink = styled.a`
 `;
 
 const CopyrightText = tw.p`text-center mt-10 font-medium tracking-wide text-sm text-gray-600`;
-export default () => {
+export default (): ReactElement => {
   return (
     <Container>
       <Content>
