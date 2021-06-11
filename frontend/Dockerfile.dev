@@ -1,9 +1,9 @@
 # Current node lts version
 FROM node:14.17.0-alpine
 
-WORKDIR /app/frontend/
+WORKDIR /app/
 
-COPY . /app/frontend/
+COPY . /app/
 
 RUN npm install
 

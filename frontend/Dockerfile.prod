@@ -1,9 +1,9 @@
 # Current node lts version
 FROM node:14.17.0-alpine as build-stage
 
-WORKDIR /app/frontend/
+WORKDIR /app/
 
-COPY . /app/frontend/
+COPY . /app/
 
 RUN npm install
 
@@ -11,17 +11,13 @@ ARG REACT_APP_NAME
 
 ENV REACT_APP_NAME=$REACT_APP_NAME
 
-ARG REACT_APP_FUCK
-
-ENV REACT_APP_FUCK=$REACT_APP_FUCK
-
 RUN npm run build
 
 FROM nginx:stable-alpine as run-stage
 
 RUN rm /etc/nginx/conf.d/default.conf
 
-COPY --from=build-stage /app/frontend/build /usr/share/nginx/html
+COPY --from=build-stage /app/build /usr/share/nginx/html
 
 COPY nginx/nginx.conf /etc/nginx/conf.d
 
