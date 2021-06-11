@@ -1,8 +1,7 @@
-/* eslint-disable */
-import React from 'react';
+import React, { ReactElement } from 'react';
 import tw from 'twin.macro';
 import styled from 'styled-components';
-import { Container as ContainerBase } from 'components/misc/Layouts.js';
+import { Container as ContainerBase } from 'components/misc/Layouts';
 import logo from '../../images/logo.svg';
 import { ReactComponent as FacebookIcon } from '../../images/facebook-icon.svg';
 import { ReactComponent as TwitterIcon } from '../../images/twitter-icon.svg';
@@ -29,7 +28,7 @@ const SocialLink = styled.a`
 `;
 
 const CopyrightText = tw.p`text-center mt-10 font-medium tracking-wide text-sm text-gray-600`;
-export default () => {
+export default (): ReactElement => {
   return (
     <Container>
       <Content>

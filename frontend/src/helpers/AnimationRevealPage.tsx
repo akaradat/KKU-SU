@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactElement } from 'react';
 import tw from 'twin.macro';
 
 /* framer-motion and useInView here are used to animate the sections in when we reach them in the viewport
@@ -65,7 +65,7 @@ function AnimatedSlideInComponent({ direction = 'left', children }) {
   );
 }
 
-export default (props) => (
+export default (props): ReactElement => (
   <StyledDiv className="App">
     <AnimationReveal {...props} />
   </StyledDiv>
