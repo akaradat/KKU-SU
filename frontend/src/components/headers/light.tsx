@@ -41,7 +41,7 @@ export const LogoLink = styled(NavLink)`
   }
 `;
 
-export const MobileNavLinksContainer = tw.nav`flex flex-1 items-center justify-between`;
+export const MobileNavLinksContainer = tw.nav`lg:hidden flex flex-1 items-center justify-between`;
 export const NavToggle = tw.button`
   lg:hidden z-20 focus:outline-none hocus:text-primary-500 transition duration-300
 `;
@@ -61,7 +61,6 @@ type props = {
   logoLink?: ReactElement | undefined;
   links?: ReactElement;
   className?: string;
-  collapseBreakpointClass?: string;
 };
 
 export default ({
@@ -69,7 +68,6 @@ export default ({
   logoLink,
   links,
   className,
-  collapseBreakpointClass = 'lg',
 }: props): ReactElement => {
   const primaryLinkProps = {
     css: roundedHeaderButton && tw`rounded-full`,
@@ -87,8 +85,8 @@ export default ({
   );
 
   const { showNavLinks, animation, toggleNavbar } = useAnimatedNavToggler();
-  const collapseBreakpointCss =
-    collapseBreakPointCssMap[collapseBreakpointClass];
+  // const collapseBreakpointCss =
+  //   collapseBreakPointCssMap[collapseBreakpointClass];
 
   const defaultLogoLink: ReactElement = (
     <LogoLink href="/">
@@ -103,19 +101,17 @@ export default ({
   const MobileNavLinksCss = {
     initial: { x: '150%', display: 'none' },
     animate: animation,
-    css: collapseBreakpointCss.mobileNavLinks,
+    // css: collapseBreakpointCss.mobileNavLinks,
   };
 
   return (
     <Header className={className || 'header-light'} id="home">
-      <DesktopNavLinks css={collapseBreakpointCss.desktopNavLinks}>
+      <DesktopNavLinks>
         {logoLink}
         {links}
       </DesktopNavLinks>
 
-      <MobileNavLinksContainer
-        css={collapseBreakpointCss.mobileNavLinksContainer}
-      >
+      <MobileNavLinksContainer>
         {logoLink}
         <MobileNavLinks {...MobileNavLinksCss}>{links}</MobileNavLinks>
         <NavToggle
@@ -133,25 +129,25 @@ export default ({
   );
 };
 
-const collapseBreakPointCssMap = {
-  sm: {
-    mobileNavLinks: tw`sm:hidden`,
-    desktopNavLinks: tw`sm:flex`,
-    mobileNavLinksContainer: tw`sm:hidden`,
-  },
-  md: {
-    mobileNavLinks: tw`md:hidden`,
-    desktopNavLinks: tw`md:flex`,
-    mobileNavLinksContainer: tw`md:hidden`,
-  },
-  lg: {
-    mobileNavLinks: tw`lg:hidden`,
-    desktopNavLinks: tw`lg:flex`,
-    mobileNavLinksContainer: tw`lg:hidden`,
-  },
-  xl: {
-    mobileNavLinks: tw`lg:hidden`,
-    desktopNavLinks: tw`lg:flex`,
-    mobileNavLinksContainer: tw`lg:hidden`,
-  },
-};
+// const collapseBreakPointCssMap = {
+//   sm: {
+//     mobileNavLinks: tw`sm:hidden`,
+//     desktopNavLinks: tw`sm:flex`,
+//     mobileNavLinksContainer: tw`sm:hidden`,
+//   },
+//   md: {
+//     mobileNavLinks: tw`md:hidden`,
+//     desktopNavLinks: tw`md:flex`,
+//     mobileNavLinksContainer: tw`md:hidden`,
+//   },
+//   lg: {
+//     mobileNavLinks: tw`lg:hidden`,
+//     desktopNavLinks: tw`lg:flex`,
+//     mobileNavLinksContainer: tw`lg:hidden`,
+//   },
+//   xl: {
+//     mobileNavLinks: tw`lg:hidden`,
+//     desktopNavLinks: tw`lg:flex`,
+//     mobileNavLinksContainer: tw`lg:hidden`,
+//   },
+// };
