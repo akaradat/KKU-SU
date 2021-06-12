@@ -30,8 +30,8 @@ app.use(expressWinston.errorLogger({
 }));
 
 
-// app.get('/', (req: express.Request, res: express.Response) => {
-//     res.status(200).send(`Server running at http://localhost:${port}`)
-// });
+app.get('/', (req: express.Request, res: express.Response) => {
+    res.status(200).send(`hello world`)
+});
 
 export default app

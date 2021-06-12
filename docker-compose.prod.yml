@@ -6,7 +6,6 @@ services:
             context: ./frontend
             dockerfile: Dockerfile.prod
             args:
-                - REACT_APP_NAME=kuyraiyedmae-prod
-                - REACT_APP_FUCK=FUCK-prod
+                - REACT_APP_NAME=PROD
         ports:
             - "80:80"

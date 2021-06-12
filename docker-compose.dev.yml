@@ -10,7 +10,7 @@ services:
         volumes:
             - ./frontend/src/:/app/src
         environment: 
-            - REACT_APP_NAME=kuyraiyedmae-dev
+            - REACT_APP_NAME=DEV
     backend:
         image: backend:dev
         build:
