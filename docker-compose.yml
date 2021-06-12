@@ -1,9 +1,18 @@
 version: "3"
 services:
     frontend:
-        image: frontend:dev
+        image: frontend
         build:
             context: ./frontend
+        networks:
+            - front
+    backend:
+        image: backend
+        build:
+            context: ./backend
+        networks:
+            - front
+            - back
     db: # this is the server name field of phpmyadmin
         image: mysql
         command: --default-authentication-plugin=mysql_native_password
@@ -17,6 +26,8 @@ services:
             - type: volume
               source: mysql-volume
               target: /var/lib/mysql
+        networks:
+            - back
     phpmyadmin:
         depends_on: 
             - db
@@ -27,6 +38,11 @@ services:
         environment:
             - PMA_ARBITRARY=1
             - PMA_HOST=db
+        networks:
+            - back
 volumes:
     mysql-volume:
         name: "mysql-volume"
+networks:
+    front:
+    back:

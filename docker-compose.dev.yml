@@ -8,6 +8,17 @@ services:
         ports:
             - "3000:3000"
         volumes:
-            - ./frontend/src/:/app/frontend/src
+            - ./frontend/src/:/app/src
         environment: 
             - REACT_APP_NAME=kuyraiyedmae-dev
+    backend:
+        image: backend:dev
+        build:
+            context: ./backend
+            dockerfile: Dockerfile.dev
+        volumes:
+            - ./backend/src/:/app/src
+        ports:
+            - "8000:8000"
+        environment: 
+            - NODE_ENV=DEV
