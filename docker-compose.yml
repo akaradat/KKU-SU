@@ -4,3 +4,47 @@ services:
         image: frontend
         build:
             context: ./frontend
+        networks:
+            - front
+    backend:
+        image: backend
+        build:
+            context: ./backend
+        networks:
+            - front
+            - back
+        environment: 
+            - REACT_APP_BACKEND_API_HOST=${REACT_APP_BACKEND_API_HOST}
+    db: # this is the server name field of phpmyadmin
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: nex
+            MYSQL_DATABASE: fresher
+        volumes:
+            - type: volume
+              source: mysql-volume
+              target: /var/lib/mysql
+        networks:
+            - back
+    phpmyadmin:
+        depends_on: 
+            - db
+        image: phpmyadmin
+        restart: always
+        ports:
+            - 8080:80
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=db
+        networks:
+            - back
+volumes:
+    mysql-volume:
+        name: "mysql-volume"
+networks:
+    front:
+    back:
