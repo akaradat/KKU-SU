@@ -9,4 +9,5 @@ export interface User {
   email: string;
   facebook: string;
   password: string;
+  groupId: number;
 }

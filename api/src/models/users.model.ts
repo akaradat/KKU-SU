@@ -14,6 +14,7 @@ export class UserModel extends Model<User, UserCreationAttributes> implements Us
   public email: string;
   public facebook: string;
   public password: string;
+  public groupId: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -62,6 +63,13 @@ export default function (sequelize: Sequelize): typeof UserModel {
       password: {
         allowNull: true,
         type: DataTypes.STRING(255),
+      },
+      groupId: {
+        references: {
+          model: 'groups',
+          key: 'id',
+        },
+        type: DataTypes.INTEGER,
       },
     },
     {
