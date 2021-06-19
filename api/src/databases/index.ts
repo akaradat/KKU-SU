@@ -36,4 +36,7 @@ const DB = {
   Sequelize, // library
 };
 
+DB.Groups.hasMany(DB.Users);
+DB.Users.belongsTo(DB.Groups, { foreignKey: 'groupId', as: 'group' });
+
 export default DB;

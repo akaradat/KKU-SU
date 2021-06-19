@@ -21,6 +21,17 @@ class UsersController {
     }
   };
 
+  public findUserGroupByStudentId = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const studentId = String(req.params.studentId);
+      const findOneUserData: User = await this.userService.findUserGroupByStudentId(studentId);
+
+      res.status(200).json({ data: findOneUserData, message: 'findGroupByStudentId' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public getUserById = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userId = Number(req.params.id);
