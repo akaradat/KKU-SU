@@ -6,7 +6,7 @@ export type UserCreationAttributes = Optional<Group, 'id'>;
 export class GroupModel extends Model<Group, UserCreationAttributes> implements Group {
   public id: number;
   public name: string;
-  public facebookURL: string;
+  public facebookUrl: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -24,8 +24,8 @@ export default function (sequelize: Sequelize): typeof GroupModel {
         allowNull: false,
         type: DataTypes.STRING(255),
       },
-      facebookURL: {
-        allowNull: false,
+      facebookUrl: {
+        allowNull: true,
         type: DataTypes.STRING(255),
       },
     },
