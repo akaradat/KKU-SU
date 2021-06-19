@@ -4,9 +4,12 @@ import { CreateUserDto } from '@dtos/users.dto';
 import HttpException from '@exceptions/HttpException';
 import { User } from '@interfaces/users.interface';
 import { isEmpty } from '@utils/util';
+import { Op } from 'sequelize';
+import groupCountService from '@services/group-counts.service';
 
 class UserService {
   public users = DB.Users;
+  public groupCountService = new groupCountService();
 
   public async findAllUser(): Promise<User[]> {
     const allUser: User[] = await this.users.findAll();
@@ -25,11 +28,15 @@ class UserService {
   public async createUser(userData: CreateUserDto): Promise<User> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: User = await this.users.findOne({ where: { email: userData.email } });
-    if (findUser) throw new HttpException(409, `You're email ${userData.email} already exists`);
+    const findUser: User = await this.users.findOne({
+      where: {
+        [Op.or]: [{ email: userData.email }, { studentId: userData.studentId }],
+      },
+    });
+    if (findUser) throw new HttpException(409, `You're email ${userData.email} or student id ${userData.studentId} already exists`);
 
-    const hashedPassword = await bcrypt.hash(userData.password, 10);
-    const createUserData: User = await this.users.create({ ...userData, password: hashedPassword });
+    const group = await this.groupCountService.getMinGroupCount();
+    const createUserData: User = await this.users.create({ ...userData, groupId: group.group_id });
     return createUserData;
   }
 
@@ -39,8 +46,8 @@ class UserService {
     const findUser: User = await this.users.findByPk(userId);
     if (!findUser) throw new HttpException(409, "You're not user");
 
-    const hashedPassword = await bcrypt.hash(userData.password, 10);
-    await this.users.update({ ...userData, password: hashedPassword }, { where: { id: userId } });
+    // const hashedPassword = await bcrypt.hash(userData.password, 10);
+    // await this.users.update({ ...userData, password: hashedPassword }, { where: { id: userId } });
 
     const updateUser: User = await this.users.findByPk(userId);
     return updateUser;
