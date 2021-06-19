@@ -74,8 +74,9 @@ export default ({
             <Heading>{heading}</Heading>
             {description && <Description>{description}</Description>}
             <Form action={formAction} method={formMethod}>
-              <Input type="email" name="email" placeholder="ชื่อ นามสกุล" />
+              <Input type="text" name="email" placeholder="ชื่อ นามสกุล" />
               <Input type="text" name="name" placeholder="ชื่อเล่น" />
+              <Input type="email" name="name" placeholder="เมล์" />
               <Input
                 type="text"
                 name="subject"
