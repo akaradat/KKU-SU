@@ -1,9 +1,11 @@
 import config from 'config';
 import Sequelize from 'sequelize';
 import { dbConfig } from '@interfaces/db.interface';
+import { logger } from '@utils/logger';
 import UserModel from '@models/users.model';
 import GroupModel from '@models/groups.model';
-import { logger } from '@utils/logger';
+import EventModel from '@/models/events.model';
+import SponsorModel from '@/models/sponsors.model';
 
 const { host, user, password, database, pool }: dbConfig = config.get('dbConfig');
 const sequelize = new Sequelize.Sequelize(database, user, password, {
@@ -32,6 +34,8 @@ sequelize.authenticate();
 const DB = {
   Users: UserModel(sequelize),
   Groups: GroupModel(sequelize),
+  Events: EventModel(sequelize),
+  Sponsors: SponsorModel(sequelize),
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };
