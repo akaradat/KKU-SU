@@ -61,8 +61,15 @@ describe('Testing Users', () => {
   describe('[POST] /users', () => {
     it('response Create user', async () => {
       const userData: CreateUserDto = {
+        name: 'name',
+        nickname: 'nickname',
         email: 'test@email.com',
         password: 'q1w2e3r4!',
+        studentId: 'studentId',
+        faculty: 'faculty',
+        branch: 'branch',
+        tel: 'tel',
+        facebook: 'facebook',
       };
 
       const usersRoute = new UserRoute();
@@ -85,8 +92,15 @@ describe('Testing Users', () => {
     it('response Update user', async () => {
       const userId = 1;
       const userData: CreateUserDto = {
+        name: 'name',
+        nickname: 'nickname',
         email: 'test@email.com',
-        password: '1q2w3e4r!',
+        password: 'q1w2e3r4!',
+        studentId: 'studentId',
+        faculty: 'faculty',
+        branch: 'branch',
+        tel: 'tel',
+        facebook: 'facebook',
       };
 
       const usersRoute = new UserRoute();
