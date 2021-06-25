@@ -1,8 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 //eslint-disable-next-line
 import { css } from 'styled-components/macro';
+import swal from 'sweetalert';
+import axios from 'axios';
 
 import Header from 'components/headers/light';
 
@@ -38,47 +40,68 @@ type props = {
   roundedHeaderButton: boolean;
 };
 
-export default ({ roundedHeaderButton }: props): ReactElement => (
-  <>
-    <Header roundedHeaderButton={roundedHeaderButton} />
-    <Container id="checkGroup">
-      <TwoColumn>
-        <LeftColumn>
-          <Heading>
-            KKU <span tw="text-primary-500">FWS</span>
-          </Heading>
-          <Paragraph>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industrys standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </Paragraph>
-          <Actions>
-            <input type="text" placeholder="รหัสนักศึกษา เช่น 643020112-x" />
-            <button
-              onClick={() => {
-                console.log(process.env);
-              }}
-            >
-              ตรวจสอบกลุ่ม
-            </button>
-          </Actions>
-          {/* <CustomersLogoStrip>
+export default ({ roundedHeaderButton }: props): ReactElement => {
+  function checkUserGroupByStudentId(): void {
+    if (!text) {
+      swal('Error', 'กรุณาใส่รหัสนักศึกษา', 'error');
+      return;
+    }
+    axios
+      .get(
+        `${process.env.REACT_APP_BACKEND_DOMAIN}/users/findGroupByStudentId/${text}`
+      )
+      .then(({ data }) => {
+        data = data.data;
+        swal(
+          `group "${data.group.name}"`,
+          `Link: ${data.group.facebookUrl || 'ติดตามเร็ว ๆ นี้'}`,
+          'success'
+        );
+      })
+      .catch((err) => {
+        const res = err.response;
+        if (!res.data || !res.data.message) return;
+        swal('Error', res.data.message, 'error');
+      });
+  }
+
+  const [text, setText] = useState('');
+  return (
+    <>
+      <Header roundedHeaderButton={roundedHeaderButton} />
+      <Container id="checkGroup">
+        <TwoColumn>
+          <LeftColumn>
+            <Heading>
+              KKU <span tw="text-primary-500">FWS</span>
+            </Heading>
+            <Paragraph>ยินดีต้อนรับนักศึกษามหาวิทยาลัยขอนแก่นทุกท่าน</Paragraph>
+            <Actions>
+              <input
+                type="text"
+                placeholder="รหัสนักศึกษา เช่น 643020112-x"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+              <button onClick={checkUserGroupByStudentId}>ตรวจสอบกลุ่ม</button>
+            </Actions>
+            {/* <CustomersLogoStrip>
             <p>Our TRUSTED Customers</p>
             <img src={CustomersLogoStripImage} alt="Our Customers" />
           </CustomersLogoStrip> */}
-        </LeftColumn>
-        <RightColumn>
-          <IllustrationContainer>
-            <img
-              tw="min-w-0 w-full max-w-lg xl:max-w-3xl"
-              src={DesignIllustration}
-              alt="Design Illustration"
-            />
-          </IllustrationContainer>
-        </RightColumn>
-      </TwoColumn>
-      <DecoratorBlob1 />
-    </Container>
-  </>
-);
+          </LeftColumn>
+          <RightColumn>
+            <IllustrationContainer>
+              <img
+                tw="min-w-0 w-full max-w-lg xl:max-w-3xl"
+                src={DesignIllustration}
+                alt="Design Illustration"
+              />
+            </IllustrationContainer>
+          </RightColumn>
+        </TwoColumn>
+        <DecoratorBlob1 />
+      </Container>
+    </>
+  );
+};

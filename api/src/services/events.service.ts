@@ -18,12 +18,12 @@ class EventService {
     return allSponsor;
   }
 
-  public async findAllEventByType(type: string): Promise<Event> {
+  public async findAllEventByType(type: string): Promise<Event[]> {
     const allowTypeList = ['EVENT', 'CHECK'];
     type = type.toLocaleUpperCase();
     if (isEmpty(type) || !allowTypeList.includes(type)) throw new HttpException(400, "You're not type");
 
-    const findEvent: Event = await this.events.findOne({
+    const findEvent: Event[] = await this.events.findAll({
       // attributes: ['name', 'studentId' /*, 'groupId'*/],
       where: {
         type,

@@ -35,7 +35,7 @@ class EventsController {
   public getEventByType = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const eventType = String(req.params.type);
-      const findEventDatas: Event = await this.eventService.findAllEventByType(eventType);
+      const findEventDatas: Event[] = await this.eventService.findAllEventByType(eventType);
 
       res.status(200).json({ data: findEventDatas, message: 'findByType' });
     } catch (error) {

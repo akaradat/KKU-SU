@@ -55,9 +55,13 @@ class UserService {
         [Op.or]: [{ email: userData.email }, { studentId: userData.studentId }],
       },
     });
+    console.log('in 2');
     if (findUser) throw new HttpException(409, `You're email ${userData.email} or student id ${userData.studentId} already exists`);
+    console.log('in 3');
 
     const group = await this.groupCountService.getMinGroupCount();
+    console.log('in 4');
+    console.log('group', group);
     const createUserData: User = await this.users.create({ ...userData, groupId: group.group_id });
     return createUserData;
   }
