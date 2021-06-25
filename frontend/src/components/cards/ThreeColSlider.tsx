@@ -51,11 +51,10 @@ type cardType = {
   img: string;
   title: string;
   detail: string;
+  link?: string;
 };
 
-const PrimaryButton = tw(
-  PrimaryButtonBase
-)`mt-auto sm:text-lg rounded-none w-full rounded sm:rounded-none sm:rounded-br-4xl py-3 sm:py-6`;
+const PrimaryButton = tw.a`px-8 py-3 font-bold rounded bg-primary-500 text-gray-100 hocus:bg-primary-700 hocus:text-gray-200 focus:shadow-outline focus:outline-none transition duration-300 mt-auto sm:text-lg rounded-none w-full rounded sm:rounded-none sm:rounded-br-4xl py-3 sm:py-6`;
 export default (): ReactElement => {
   // useState is used instead of useRef below because we want to re-render when sliderRef becomes available (not null)
   const mockCards = [
@@ -145,7 +144,9 @@ export default (): ReactElement => {
                 </TitleReviewContainer>
                 <Description>{card.detail}</Description>
               </TextInfo>
-              <PrimaryButton>ดูรายละเอียด</PrimaryButton>
+              <PrimaryButton href={card.link} target="#blank">
+                ดูรายละเอียด
+              </PrimaryButton>
             </Card>
           ))}
         </CardSlider>
