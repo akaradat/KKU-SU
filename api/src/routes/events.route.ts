@@ -12,6 +12,7 @@ class EventsRoute implements Route {
   }
 
   private initializeRoutes() {
+    this.router.get(`/sponsors`, this.eventsController.getSponsors);
     this.router.get(`${this.path}`, this.eventsController.getEvents);
     this.router.get(`${this.path}/findEventByType/:type(\\w+)`, this.eventsController.getEventByType);
   }

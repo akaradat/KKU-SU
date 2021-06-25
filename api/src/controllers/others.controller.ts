@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Event } from '@interfaces/events.interface';
+import { Sponsor } from '@interfaces/sponsors.interface';
 import eventService from '@services/events.service';
 import HackerBoiException from '@/exceptions/HackerBoiException';
 
@@ -12,6 +13,19 @@ class OthersController {
 
       res.status(200).json({
         data: findAllEventsData,
+        message: 'findAll',
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getSponsors = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const findAllSponsorsData: Sponsor[] = await this.eventService.findAllSponsor();
+
+      res.status(200).json({
+        data: findAllSponsorsData,
         message: 'findAll',
       });
     } catch (error) {
