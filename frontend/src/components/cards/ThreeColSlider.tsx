@@ -1,4 +1,5 @@
 import React, { useState, useEffect, ReactElement } from 'react';
+import axios from 'axios';
 import Slider from 'react-slick';
 import tw from 'twin.macro';
 import styled from 'styled-components';
@@ -46,12 +47,42 @@ type slideRefType = {
   slickNext?: () => void;
 };
 
+type cardType = {
+  img: string;
+  title: string;
+  detail: string;
+};
+
 const PrimaryButton = tw(
   PrimaryButtonBase
 )`mt-auto sm:text-lg rounded-none w-full rounded sm:rounded-none sm:rounded-br-4xl py-3 sm:py-6`;
 export default (): ReactElement => {
   // useState is used instead of useRef below because we want to re-render when sliderRef becomes available (not null)
+  const mockCards = [
+    {
+      img: 'https://admissions.kku.ac.th/wp-content/uploads/2019/09/11111111111111111.jpg',
+      title: 'กิจกรรม',
+      detail: 'ยังไม่มีกิจกรรม เร็ว ๆ นี้ โดยมหาวิทยาลัยขอนแก่น',
+    },
+    {
+      img: 'https://admissions.kku.ac.th/wp-content/uploads/2019/09/11111111111111111.jpg',
+      title: 'กิจกรรม',
+      detail: 'ยังไม่มีกิจกรรม เร็ว ๆ นี้ โดยมหาวิทยาลัยขอนแก่น',
+    },
+    {
+      img: 'https://admissions.kku.ac.th/wp-content/uploads/2019/09/11111111111111111.jpg',
+      title: 'กิจกรรม',
+      detail: 'ยังไม่มีกิจกรรม เร็ว ๆ นี้ โดยมหาวิทยาลัยขอนแก่น',
+    },
+    {
+      img: 'https://admissions.kku.ac.th/wp-content/uploads/2019/09/11111111111111111.jpg',
+      title: 'กิจกรรม',
+      detail: 'ยังไม่มีกิจกรรม เร็ว ๆ นี้ โดยมหาวิทยาลัยขอนแก่น',
+    },
+  ];
+
   const [sliderRef, setSliderRef] = useState<slideRefType | null>(null);
+  const [cards, setCards] = useState<cardType[]>([]);
   const sliderSettings = {
     arrows: false,
     slidesToShow: 3,
@@ -73,51 +104,18 @@ export default (): ReactElement => {
   };
 
   useEffect(() => {
-    console.log(1, sliderRef);
-  }, [sliderRef]);
-
-  /* Change this according to your needs */
-  const cards = [
-    {
-      imageSrc:
-        'https://www.matichon.co.th/wp-content/uploads/2018/08/S__7274521.jpg',
-      title: 'ปิ้งไก่ ในตำนาน',
-      description:
-        'กิจกรรม ปิ้งไก่ ในตำนาน ระเบิดภูเขา เผากระท่อม พร้อมปิ้งไก่ พบกันที่ช่องเป็ดหมี เร็ว ๆ นี้',
-      locationText: 'Rome, Italy',
-      pricingText: 'USD 39/Day',
-      rating: '4.8',
-    },
-    {
-      imageSrc: 'https://entertain.teenee.com/thaistar/img3/1295030.jpg',
-      title: 'คมแฝก',
-      description:
-        'กิจกรรมร้องเพลงประสานเสียงคมแฝก ตาต่อตา ฟันต่อฟัน ตีต่อตี ตี ตี ตีเข้าไป (ไม้ตายคมแฝก) ลูกผู้ชาย ใจนักเลง ไม่ข่มเหง รังแกใครก่อน',
-      locationText: 'Ibiza, Spain',
-      pricingText: 'USD 50/Day',
-      rating: 4.9,
-    },
-    {
-      imageSrc:
-        'https://file.mk.co.kr/meet/neds/2020/03/image_readmed_2020_309413_15851148394137267.jpg',
-      title: 'baby shark',
-      description:
-        'Baby shark, doo, doo, doo, doo, doo, doo Baby shark, doo, doo, doo, doo, doo, doo Baby shark, doo, doo, doo, doo, doo, doo',
-      locationText: 'Palo Alto, CA',
-      pricingText: 'USD 19/Day',
-      rating: '5.0',
-    },
-    {
-      imageSrc:
-        'https://images.unsplash.com/photo-1571770095004-6b61b1cf308a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=1024&w=768&q=80',
-      title: 'Hudak Homes',
-      description:
-        'Lorem ipsum dolor sit amet, consectur dolori adipiscing elit, sed do eiusmod tempor nova incididunt ut labore et dolore magna aliqua.',
-      locationText: 'Arizona, RAK',
-      pricingText: 'USD 99/Day',
-      rating: 4.5,
-    },
-  ];
+    axios
+      .get(
+        `${process.env.REACT_APP_BACKEND_DOMAIN}/events/findEventByType/event`
+      )
+      .then(({ data }) => {
+        if (data.data.length > 0) {
+          setCards(data.data);
+        } else {
+          setCards(mockCards);
+        }
+      });
+  }, []);
 
   return (
     <Container id="event">
@@ -133,19 +131,19 @@ export default (): ReactElement => {
             </NextButton>
           </Controls>
         </HeadingWithControl>
-        <CardSlider ref={setSliderRef} {...sliderSettings}>
+        <CardSlider
+          ref={setSliderRef}
+          {...sliderSettings}
+          style={{ minWidth: '1000px' }}
+        >
           {cards.map((card, index) => (
             <Card key={index}>
-              <CardImage imageSrc={card.imageSrc} />
+              <CardImage imageSrc={card.img} />
               <TextInfo>
                 <TitleReviewContainer>
                   <Title>{card.title}</Title>
-                  {/* <RatingsInfo>
-                    <StarIcon />
-                    <Rating>{card.rating}</Rating>
-                  </RatingsInfo> */}
                 </TitleReviewContainer>
-                <Description>{card.description}</Description>
+                <Description>{card.detail}</Description>
               </TextInfo>
               <PrimaryButton>ดูรายละเอียด</PrimaryButton>
             </Card>
