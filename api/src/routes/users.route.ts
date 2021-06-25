@@ -17,8 +17,8 @@ class UsersRoute implements Route {
 
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.usersController.getUsers);
+    this.router.get(`${this.path}/:id(\\d+)`, this.othersController.foundHackerBoi);
     this.router.get(`${this.path}/findGroupByStudentId/:studentId([0-9\-]+)`, this.usersController.findUserGroupByStudentId);
-    this.router.get(`${this.path}/:id(\\w+)`, this.othersController.foundHackerBoi);
     // this.router.post(`${this.path}`, validationMiddleware(CreateUserDto, 'body'), this.usersController.createUser);
     // this.router.put(`${this.path}/:id(\\d+)`, validationMiddleware(CreateUserDto, 'body', true), this.usersController.updateUser);
     // this.router.delete(`${this.path}/:id(\\d+)`, this.usersController.deleteUser);
