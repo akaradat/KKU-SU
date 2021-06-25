@@ -1,5 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import tw from 'twin.macro';
+import swal from 'sweetalert';
 import styled from 'styled-components';
 import { css } from 'styled-components/macro'; //eslint-disable-line
 import {
@@ -8,6 +9,7 @@ import {
 } from 'components/misc/Headings';
 import { PrimaryButton as PrimaryButtonBase } from 'components/misc/Buttons';
 import EmailIllustrationSrc from 'images/email-illustration.svg';
+import axios from 'axios';
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
@@ -41,8 +43,6 @@ type Props = {
   heading?: string | ReactElement;
   description?: string;
   submitButtonText?: string;
-  formAction?: string;
-  formMethod?: string;
   textOnLeft?: boolean;
 };
 
@@ -56,11 +56,64 @@ export default ({
   ),
   description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   submitButtonText = 'ลงทะเบียน',
-  formAction = '#',
-  formMethod = 'get',
   textOnLeft = true,
 }: Props): ReactElement => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
+  const [name, setName] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [email, setEmail] = useState('');
+  const [studentId, setStudentId] = useState('');
+  const [faculty, setFaculty] = useState('');
+  const [branch, setBranch] = useState('');
+  const [tel, setTel] = useState('');
+  const [facebook, setFacebook] = useState('');
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (
+      !name ||
+      !nickname ||
+      !email ||
+      !studentId ||
+      !faculty ||
+      !branch ||
+      !tel ||
+      !facebook
+    ) {
+      return swal('Error', 'กรุณากรอกข้อมูลให้ครบถ้วน', 'error');
+    }
+
+    const postData = {
+      name,
+      nickname,
+      email,
+      studentId,
+      faculty,
+      branch,
+      tel,
+      facebook,
+    };
+
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_DOMAIN}/users`, postData)
+      .then(() => {
+        swal(`ลงทะเบียนสำเร็จ`, ``, 'success');
+        setName('');
+        setNickname('');
+        setEmail('');
+        setStudentId('');
+        setFaculty('');
+        setBranch('');
+        setTel('');
+        setFacebook('');
+      })
+      .catch((err) => {
+        const res = err.response;
+        if (!res.data || !res.data.message) return;
+        swal('Error', res.data.message, 'error');
+      });
+  };
 
   return (
     <Container id="register">
@@ -73,19 +126,63 @@ export default ({
             {subheading && <Subheading>{subheading}</Subheading>}
             <Heading>{heading}</Heading>
             {description && <Description>{description}</Description>}
-            <Form action={formAction} method={formMethod}>
-              <Input type="text" name="email" placeholder="ชื่อ นามสกุล" />
-              <Input type="text" name="name" placeholder="ชื่อเล่น" />
-              <Input type="email" name="name" placeholder="เมล์" />
+            <Form onSubmit={onSubmit}>
               <Input
                 type="text"
-                name="subject"
-                placeholder="รหัสนักศึกษา เช่น 643020112-x"
+                name="nickname"
+                placeholder="ชื่อ นามสกุล"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
-              <Input type="text" name="subject" placeholder="คณะ" />
-              <Input type="text" name="subject" placeholder="สาขา" />
-              <Input type="text" name="subject" placeholder="เบอร์โทรติดต่อ" />
-              <Input type="text" name="subject" placeholder="Facebook" />
+              <Input
+                type="text"
+                name="name"
+                placeholder="ชื่อเล่น"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+              />
+              <Input
+                type="email"
+                name="email"
+                placeholder="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Input
+                type="text"
+                name="studentId"
+                placeholder="รหัสนักศึกษา เช่น 643020112-x"
+                value={studentId}
+                onChange={(e) => setStudentId(e.target.value)}
+              />
+              <Input
+                type="text"
+                name="faculty"
+                placeholder="คณะ"
+                value={faculty}
+                onChange={(e) => setFaculty(e.target.value)}
+              />
+              <Input
+                type="text"
+                name="branch"
+                placeholder="สาขา"
+                value={branch}
+                onChange={(e) => setBranch(e.target.value)}
+              />
+              <Input
+                type="text"
+                name="tel"
+                placeholder="เบอร์โทรติดต่อ"
+                value={tel}
+                onChange={(e) => setTel(e.target.value)}
+              />
+              <Input
+                type="text"
+                name="facebook"
+                placeholder="Facebook"
+                value={facebook}
+                onChange={(e) => setFacebook(e.target.value)}
+              />
               <SubmitButton type="submit">{submitButtonText}</SubmitButton>
             </Form>
           </TextContent>
