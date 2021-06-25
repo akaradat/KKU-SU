@@ -1,4 +1,5 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import tw from 'twin.macro';
 import styled from 'styled-components';
@@ -52,11 +53,16 @@ type Props = {
     | null;
 };
 
+type faqType = {
+  title: string;
+  detail: string;
+  link?: string;
+};
+
 export default ({
   subheading = '',
   heading = 'Questions',
   description = 'Here are some frequently asked questions about our hotels from our loving customers. Should you have any other questions, feel free to reach out via the contact form below.',
-  faqs = null,
 }: Props): ReactElement => {
   /*
    * You can modify FAQs either by modifying the below defaultFaqs array or by passing a custom array of FAQs using
@@ -64,36 +70,42 @@ export default ({
    */
   const defaultFaqs = [
     {
-      question: 'กิจกรรมที่ 1: Incididunt incididunt labore.',
-      answer:
+      title: 'กิจกรรมที่ 1: Incididunt incididunt labore.',
+      detail:
         'Yes, it is, if you have a membership with us. Otherwise it is charged as per the menu. Some limits do apply as to how much items can be included in your lunch. This limit is enough for any one person and merely exists to discourage abusal of the system.',
     },
     {
-      question: 'กิจกรรมที่ 2: Mollit dolor aliquip aliqua deserunt.',
-      answer:
+      title: 'กิจกรรมที่ 2: Mollit dolor aliquip aliqua deserunt.',
+      detail:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     },
     {
-      question: 'กิจกรรมที่ 3: Elit nulla commodo aliqua ipsum quis dolor.',
-      answer:
+      title: 'กิจกรรมที่ 3: Elit nulla commodo aliqua ipsum quis dolor.',
+      detail:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     },
     {
-      question:
+      title:
         'กิจกรรมที่ 4: Dolore excepteur quis laborum voluptate duis ea nostrud anim ad dolore.',
-      answer:
+      detail:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     },
   ];
+  const [faqs, setFaqs] = useState<faqType[]>([]);
 
-  if (!faqs || faqs.length === 0) faqs = defaultFaqs;
-
-  const [activeQuestionIndex, setActiveQuestionIndex] = useState(null);
-
-  const toggleQuestion = (questionIndex) => {
-    if (activeQuestionIndex === questionIndex) setActiveQuestionIndex(null);
-    else setActiveQuestionIndex(questionIndex);
-  };
+  useEffect(() => {
+    axios
+      .get(
+        `${process.env.REACT_APP_BACKEND_DOMAIN}/events/findEventByType/check`
+      )
+      .then(({ data }) => {
+        if (data.data.length > 0) {
+          setFaqs(data.data);
+        } else {
+          setFaqs(defaultFaqs);
+        }
+      });
+  }, []);
 
   return (
     <PrimaryBackgroundContainer id="checkEvent">
@@ -118,12 +130,12 @@ export default ({
                   <FAQ
                     key={index}
                     onClick={() => {
-                      toggleQuestion(index);
+                      window.open(faq.link, '_blank');
                     }}
                     className="group"
                   >
                     <Question>
-                      <QuestionText>{faq.question}</QuestionText>
+                      <QuestionText>{faq.title}</QuestionText>
                       <QuestionToggleIcon>
                         <ExternalLink />
                       </QuestionToggleIcon>
@@ -134,15 +146,13 @@ export default ({
                         collapsed: { opacity: 0, height: 0, marginTop: '0px' },
                       }}
                       initial="collapsed"
-                      animate={
-                        activeQuestionIndex === index ? 'open' : 'collapsed'
-                      }
+                      animate={'collapsed'}
                       transition={{
                         duration: 0.3,
                         ease: [0.04, 0.62, 0.23, 0.98],
                       }}
                     >
-                      {faq.answer}
+                      {faq.detail}
                     </Answer>
                   </FAQ>
                 ))}
