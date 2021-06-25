@@ -54,7 +54,7 @@ export default ({
       <wbr /> ที่น่ารัก
     </>
   ),
-  description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  description = '',
   submitButtonText = 'ลงทะเบียน',
   textOnLeft = true,
 }: Props): ReactElement => {

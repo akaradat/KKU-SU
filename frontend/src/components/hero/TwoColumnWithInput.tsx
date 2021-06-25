@@ -75,12 +75,7 @@ export default ({ roundedHeaderButton }: props): ReactElement => {
             <Heading>
               KKU <span tw="text-primary-500">FWS</span>
             </Heading>
-            <Paragraph>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </Paragraph>
+            <Paragraph>ยินดีต้อนรับนักศึกษามหาวิทยาลัยขอนแก่นทุกท่าน</Paragraph>
             <Actions>
               <input
                 type="text"
