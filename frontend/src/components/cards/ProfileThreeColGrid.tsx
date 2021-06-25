@@ -1,4 +1,5 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { useState, ReactElement, useEffect } from 'react';
+import axios from 'axios';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { css } from 'styled-components/macro';
@@ -18,7 +19,7 @@ const Subheading = tw(SubheadingBase)`text-center mb-3`;
 const Description = tw(SectionDescription)`mx-auto text-center`;
 
 const Cards = tw.div`flex flex-wrap flex-row justify-center sm:max-w-2xl lg:max-w-5xl mx-auto`;
-const Card = tw.div`mt-24 w-full sm:w-1/2 lg:w-1/3 flex flex-col items-center`;
+const Card = tw.div`cursor-pointer mt-24 w-full sm:w-1/2 lg:w-1/3 flex flex-col items-center`;
 const CardImage = styled.div`
   ${(props) =>
     css`
@@ -50,106 +51,69 @@ type Props = {
   heading?: string;
   subheading?: string;
   description?: string;
-  cards?: {
-    imageSrc: string;
-    position: string;
-    name: string;
-    links: {
-      url: string;
-      icon: FunctionComponent<css>;
-    }[];
-  }[];
+  // cards?: {
+
+  // }[];
 };
 
+type cardType = {
+  title: string;
+  detail: string;
+  img: string;
+  link: string;
+};
 export default ({
   heading = 'ผู้สนับสนุน',
   subheading = '',
   description = '',
-  cards = [
+}: Props): ReactElement => {
+  const mockCards = [
     {
-      imageSrc: 'https://picsum.photos/seed/xyz/1000',
-      position: 'www.xyz.com',
-      name: 'Adam เครื่องเขียน',
-      links: [
-        {
-          url: 'https://twitter.com',
-          icon: TwitterIcon,
-        },
-        {
-          url: 'https://linkedin.com',
-          icon: FacebookIcon,
-        },
-        {
-          url: 'https://github.com',
-          icon: IgIcon,
-        },
-      ],
+      title: 'Soulmate',
+      detail: 'สิ่งของ สื่อรัก',
+      img: 'https://thumbs.dreamstime.com/b/black-cupid-b-valentine-love-vector-168795221.jpg',
+      link: 'https://www.facebook.com',
     },
-    {
-      imageSrc: 'https://picsum.photos/seed/abc/1000',
-      position: 'www.abc.com',
-      name: 'Charlotte เครื่องครัว',
-      links: [
-        {
-          url: 'https://twitter.com',
-          icon: TwitterIcon,
-        },
-        {
-          url: 'https://linkedin.com',
-          icon: FacebookIcon,
-        },
-        {
-          url: 'https://github.com',
-          icon: IgIcon,
-        },
-      ],
-    },
-    {
-      imageSrc: 'https://picsum.photos/seed/hello/1000',
-      position: '08x-xxx-xxxx',
-      name: 'Silvester อาหารตามสั่ง',
-      links: [
-        {
-          url: 'https://twitter.com',
-          icon: TwitterIcon,
-        },
-        {
-          url: 'https://linkedin.com',
-          icon: FacebookIcon,
-        },
-        {
-          url: 'https://github.com',
-          icon: IgIcon,
-        },
-      ],
-    },
-  ],
-}: Props): ReactElement => (
-  <Container>
-    <ContentWithPaddingXl>
-      <HeadingContainer>
-        {subheading && <Subheading>{subheading}</Subheading>}
-        {heading && <Heading>{heading}</Heading>}
-        {description && <Description>{description}</Description>}
-      </HeadingContainer>
-      <Cards>
-        {cards.map((card, index) => (
-          <Card key={index}>
-            <CardImage imageSrc={card.imageSrc} />
-            <CardContent>
-              <span className="position">{card.position}</span>
-              <span className="name">{card.name}</span>
-              <CardLinks>
-                {card.links.map((link, linkIndex) => (
-                  <a key={linkIndex} className="link" href={link.url}>
-                    <link.icon className="icon" />
-                  </a>
-                ))}
-              </CardLinks>
-            </CardContent>
-          </Card>
-        ))}
-      </Cards>
-    </ContentWithPaddingXl>
-  </Container>
-);
+  ];
+
+  const [cards, setCards] = useState<cardType[]>([]);
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_DOMAIN}/sponsors`)
+      .then(({ data }) => {
+        if (data.data.length > 0) {
+          setCards(data.data);
+        } else {
+          setCards(mockCards);
+        }
+      });
+  }, []);
+
+  return (
+    <Container>
+      <ContentWithPaddingXl>
+        <HeadingContainer>
+          {subheading && <Subheading>{subheading}</Subheading>}
+          {heading && <Heading>{heading}</Heading>}
+          {description && <Description>{description}</Description>}
+        </HeadingContainer>
+        <Cards>
+          {cards.map((card, index) => (
+            <Card
+              key={index}
+              onClick={() => {
+                window.open(card.link, '_blank');
+              }}
+            >
+              <CardImage imageSrc={card.img} />
+              <CardContent>
+                <span className="position">{card.detail}</span>
+                <span className="name">{card.title}</span>
+              </CardContent>
+            </Card>
+          ))}
+        </Cards>
+      </ContentWithPaddingXl>
+    </Container>
+  );
+};
