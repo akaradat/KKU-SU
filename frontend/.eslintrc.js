@@ -20,5 +20,6 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error', { singleQuote: true }],
     'react/react-in-jsx-scope': 'off',
+    'react/display-name': 'off',
   },
 };
