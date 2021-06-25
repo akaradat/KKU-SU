@@ -34,4 +34,7 @@ app.get('/', (req: express.Request, res: express.Response) => {
     res.status(200).send(`hello world`)
 });
 
+app.get('/test', (req: express.Request, res: express.Response) => {
+    res.status(200).send(`test something`)
+});
 export default app
