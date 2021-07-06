@@ -50,8 +50,8 @@ export default ({
   subheading = 'WELCOME',
   heading = (
     <>
-      ลงทะเบียน <span tw="text-primary-500">น้องใหม่</span>
-      <wbr /> ที่น่ารัก
+      ลงทะเบียน <span tw="text-primary-500">เพื่อนใหม่</span>
+      <wbr /> กาลพฤกษ์ ช่อที่ 58
     </>
   ),
   description = '',

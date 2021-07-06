@@ -52,11 +52,18 @@ export default ({ roundedHeaderButton }: props): ReactElement => {
       )
       .then(({ data }) => {
         data = data.data;
-        swal(
-          `group "${data.group.name}"`,
-          `Link: ${data.group.facebookUrl || 'ติดตามเร็ว ๆ นี้'}`,
-          'success'
-        );
+        swal({
+          title: `group "${data.group.name}"`,
+          content: {
+            element: 'a',
+            attributes: {
+              href: data.group.facebookUrl || '#',
+              target: '_blank',
+              innerText: data.group.facebookUrl || 'ติดตามเร็ว ๆ นี้',
+            },
+          },
+          icon: 'success',
+        });
       })
       .catch((err) => {
         const res = err.response;
